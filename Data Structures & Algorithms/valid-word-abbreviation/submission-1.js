@@ -1,0 +1,35 @@
+class Solution {
+    /**
+     * @param {string} word
+     * @param {string} abbr
+     * @return {boolean}
+     */
+    validWordAbbreviation(word, abbr) {
+        let i = 0;
+        let j = 0;
+
+        const isDigit = (char) => char >= "0" && char <= "9";
+
+        while(i < word.length && j < abbr.length) {
+            if(abbr[j] === "0") return false;
+            if(isDigit(abbr[j])) {
+                let num = 0;
+                
+                if(num > word.length) return false;
+                
+                while(j < abbr.length && isDigit(abbr[j])) {
+                    num = num * 10 + (abbr[j] - "0");
+                    j++;
+                }
+                
+                i += num;
+            } else {
+                if(word[i] !== abbr[j]) return false;
+                i++;
+                j++;
+            }
+        }
+
+        return i === word.length && j === abbr.length;
+    }
+}
